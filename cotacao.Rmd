@@ -1,0 +1,82 @@
+---
+title: "Análise Cotação MGLU3.SA"
+author: "Alisson Fernandes"
+date: "06/01/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## MGLU3.SA
+
+Este documento visa apresentar as informações sobre a cotação do ativo MGLU3.SA listada na bolsa de valores, utilizando a linguagem R
+
+Importando os principais pacotes
+
+```{r}
+library(quantmod)
+library(xts)
+library(moments)
+```
+
+Selecionando o periodo para analise
+
+
+```{r}
+inicial_data = as.Date("2020-01-01")
+final_data = as.Date("2020-12-31")
+
+```
+
+## Selecionando o Papel MGLU3.SA
+
+existem 3 maneiras possiveis para selecionar o papel utilizando o Yahoo Finance e o Google Finance, estes recursos são gratuitos e podem apresentar instabilidade
+```{r}
+getSymbols("MGLU3.SA", src = "yahoo", from = inicial_data, to = final_data, auto.assing = T )
+
+
+```       
+## Plotando o Grafico Candle Sitck
+```{r}
+candleChart(MGLU3.SA)
+```
+## Alterando o tema do Grafico
+
+```{r}
+candleChart(MGLU3.SA, multi.col = TRUE, theme = "white")
+
+
+```
+
+## Customizando o Grafico de Cotação
+
+Neste caso foi utilizado a cotação com o fechamento semanal
+
+```{r}
+chart_Series(to.weekly(MGLU3.SA), up.col= 'red', dn.col='white')
+
+```
+## Alterando o periodo da cotação
+
+Neste cenário o periodo foi apliado para o fechamento mensal
+
+```{r}
+chart_Series(to.monthly(MGLU3.SA), up.col= 'red', dn.col='white')
+
+
+```
+## Adcionando um indicador ao grafico
+
+O indicador utilizado foi o Bandas De Bollinger pra que serve nao faço a minima ideia
+
+```{r}
+chart_Series(to.monthly(MGLU3.SA), up.col= 'red', dn.col='white')
+addBBands(n= 20, sd = 2)
+
+```
+
+Este é meu primeiro trabalho em R com algum tipo de fundamento.
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
